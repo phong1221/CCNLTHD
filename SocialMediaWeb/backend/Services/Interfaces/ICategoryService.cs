@@ -1,5 +1,5 @@
 ﻿using Backend.DTO;
-using Backend.DTO.Category;
+using Backend.DTO.CategoryDTO;
 
 namespace Backend.Services.Interfaces
 {

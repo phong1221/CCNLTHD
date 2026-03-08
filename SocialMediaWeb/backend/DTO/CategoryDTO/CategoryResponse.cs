@@ -1,4 +1,4 @@
-﻿namespace Backend.DTO.Category
+﻿namespace Backend.DTO.CategoryDTO
 {
     public class CategoryResponse
     {

@@ -17,6 +17,7 @@ namespace Backend.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<Reaction>Reactions { get; set; }
         public DbSet<Report> Reports { get; set; }
+        // xác định mối quạn hệ trong follow tường minh
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Follow>()

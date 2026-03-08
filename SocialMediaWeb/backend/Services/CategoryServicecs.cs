@@ -1,6 +1,6 @@
 ﻿using Backend.Data;
 using Backend.DTO;
-using Backend.DTO.Category;
+using Backend.DTO.CategoryDTO;
 using Backend.Models.Entities;
 using Backend.Services.Interfaces;
 using System;
@@ -70,11 +70,11 @@ namespace Backend.Services
              .Where(c=>c.IsDeleted==false)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .Select(c => mapToResponse(c))
             .ToList();
+            var result=item.Select(c=>mapToResponse(c)).ToList();
             return new PageResult<CategoryResponse>
             {
-                Items = item,
+                Items = result,
                 Total=item.Count,
             };
         }
@@ -92,7 +92,7 @@ namespace Backend.Services
             context.SaveChanges();
             return mapToResponse(category);
         }
-        public CategoryResponse mapToResponse(Category category)
+        public  CategoryResponse mapToResponse(Category category)
         {
             return new CategoryResponse
             {
