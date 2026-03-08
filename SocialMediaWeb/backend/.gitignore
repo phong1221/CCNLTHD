@@ -1,0 +1,19 @@
+# Visual Studio
+.vs/
+
+# Build
+bin/
+obj/
+
+# User files
+*.user
+*.suo
+
+# Logs
+*.log
+
+# Rider
+.idea/
+
+# Node (nếu sau này có frontend)
+node_modules/
