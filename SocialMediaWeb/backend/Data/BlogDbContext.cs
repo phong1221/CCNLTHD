@@ -17,5 +17,17 @@ namespace Backend.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<Reaction>Reactions { get; set; }
         public DbSet<Report> Reports { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Follow>()
+                .HasOne(f => f.Follower)
+                .WithMany(u => u.Following)
+                .HasForeignKey(f => f.FollowerId);
+
+            modelBuilder.Entity<Follow>()
+                .HasOne(f => f.Following)
+                .WithMany(u => u.Followers)
+                .HasForeignKey(f => f.FollowingId);
+        }
     }
 }
