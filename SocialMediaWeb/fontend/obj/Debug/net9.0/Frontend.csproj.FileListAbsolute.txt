@@ -199,8 +199,6 @@ D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\dotnet.run
 D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\icudt_CJK.tjcz0u77k5.dat
 D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\icudt_EFIGS.tptq2av103.dat
 D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\icudt_no_CJK.lfu7j35m59.dat
-D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\Frontend.aifhh84x8v.wasm
-D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\Frontend.24bxiq9sz2.pdb
 D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\blazor.boot.json
 D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\blazor.webassembly.js.gz
 D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\Microsoft.AspNetCore.Authorization.z6jo10m0rd.wasm.gz
@@ -403,8 +401,6 @@ D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\dotnet.run
 D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\icudt_CJK.tjcz0u77k5.dat.gz
 D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\icudt_EFIGS.tptq2av103.dat.gz
 D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\icudt_no_CJK.lfu7j35m59.dat.gz
-D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\Frontend.aifhh84x8v.wasm.gz
-D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\Frontend.24bxiq9sz2.pdb.gz
 D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\blazor.boot.json.gz
 D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\Frontend.staticwebassets.runtime.json
 D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\Frontend.staticwebassets.endpoints.json
@@ -1068,9 +1064,6 @@ D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\compressed\326zqjge7o-zbl9qys
 D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\compressed\iw0ae27wof-tjcz0u77k5.gz
 D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\compressed\285b9jwisc-tptq2av103.gz
 D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\compressed\gigkqu8b6v-lfu7j35m59.gz
-D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\compressed\idv3gmpu33-aifhh84x8v.gz
-D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\compressed\820j4a4l7m-24bxiq9sz2.gz
-D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\compressed\njn95cf9xo-1ou9zmr2q5.gz
 D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\staticwebassets.build.json
 D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\staticwebassets.build.json.cache
 D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\staticwebassets.development.json
@@ -1080,3 +1073,11 @@ D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\Frontend.dll
 D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\refint\Frontend.dll
 D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\Frontend.pdb
 D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\ref\Frontend.dll
+D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\Frontend.k253fj5oup.wasm
+D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\Frontend.2wb83z73cf.pdb
+D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\Frontend.k253fj5oup.wasm.gz
+D:\CCNLTHD\SocialMediaWeb\fontend\bin\Debug\net9.0\wwwroot\_framework\Frontend.2wb83z73cf.pdb.gz
+D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\Frontend.sourcelink.json
+D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\compressed\idv3gmpu33-k253fj5oup.gz
+D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\compressed\820j4a4l7m-2wb83z73cf.gz
+D:\CCNLTHD\SocialMediaWeb\fontend\obj\Debug\net9.0\compressed\njn95cf9xo-1g9kdp2oda.gz
