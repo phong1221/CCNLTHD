@@ -54,6 +54,7 @@ builder.Services.AddScoped<ReactService, ReactService>();
 builder.Services.AddScoped<PostService, PostService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 // set up db 
 builder.Services.AddDbContext<BlogDbContext>(options =>
