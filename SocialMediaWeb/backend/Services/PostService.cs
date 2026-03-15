@@ -55,12 +55,13 @@ namespace Backend.Services
 
         public List<PostResponse> GetAll()
         {
-            return context.Posts
+            var item= context.Posts
                 .Where(p => p.IsDeleted == false)
                 .Include(p=>p.User)
                 .Include(p=>p.Category)
-                .Select(p=>mapToResponse(p))
                 .ToList();
+            var result = item.Select(p => mapToResponse(p)).ToList();
+            return result;
         }
 
         public PageResult<PostResponse> GetPage(int page, int pageSize)

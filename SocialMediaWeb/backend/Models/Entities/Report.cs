@@ -12,6 +12,7 @@ namespace Backend.Models.Entities
         public string Reason { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public bool IsAccept { get; set; } = false;
+        public bool IsDeleted { get; set; } = false;
         
     }
 }

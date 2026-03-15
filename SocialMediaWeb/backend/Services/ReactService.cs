@@ -51,17 +51,22 @@ namespace Backend.Services
 
         public List<ReactionResponse> GetAllByPost(int PostId)
         {
-            return context.Reactions
+            var item= context.Reactions
+                .Where(p => p.Id == PostId)
                 .Include(r => r.Post)
                 .Include(r => r.User)
-                .Select(r=>mapToResponse(r))
                 .ToList();
+            var result=item.Select(r => mapToResponse(r)).ToList();
+            return result;
         }
 
         public PageResult<ReactionResponse> GetPageByPost(int PostId, int page, int pageSize)
         {
-            var total = context.Reactions.Count();
+            var total = context.Reactions
+                .Where(p=>p.Id==PostId)
+                .Count();
              var item= context.Reactions
+                .Where(p => p.Id == PostId)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .Include(r => r.Post)
@@ -74,7 +79,7 @@ namespace Backend.Services
                 Total = total,
             };
         }
-        public static ReactionResponse mapToResponse(Reaction reaction)
+        public  ReactionResponse mapToResponse(Reaction reaction)
         {
             return new ReactionResponse
             {

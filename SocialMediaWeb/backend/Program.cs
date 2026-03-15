@@ -2,6 +2,7 @@ using Backend.Controllers;
 using Backend.Data;
 using Backend.Middlewares;
 using Backend.Services;
+using Backend.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Text.Json.Serialization;
@@ -23,6 +24,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<CategoryServicecs, CategoryServicecs>();
 builder.Services.AddScoped<ReactService, ReactService>();
 builder.Services.AddScoped<PostService,PostService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 // set up db 
 builder.Services.AddDbContext<BlogDbContext>(options =>
     options.UseMySql(
