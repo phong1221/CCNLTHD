@@ -3,16 +3,19 @@ using Backend.DTO;
 using Backend.DTO.CommentDTO;
 using Backend.Models.Entities;
 using Backend.Services.Interfaces;
+using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace Backend.Services
 {
     public class CommentService : ICommentService
     {
         private readonly BlogDbContext context;
+        public readonly IAuthService authService;
 
-        public CommentService(BlogDbContext context)
+        public CommentService(BlogDbContext context, IAuthService authService)
         {
             this.context = context;
+            this.authService = authService;
         }
 
         public List<CommentResponse> GetAll()
@@ -43,13 +46,7 @@ namespace Backend.Services
 
         public CommentResponse Create(CommentRequest request)
         {
-            // Kiểm tra User tồn tại
-            var user = context.Users.FirstOrDefault(u => u.Id == request.UserId && u.IsActive);
-            if (user == null)
-            {
-                throw new Exception("Người dùng không tồn tại với id: " + request.UserId);
-            }
-
+            var userId=authService.GetCurrentUser().Id;
             // Kiểm tra Post tồn tại
             var post = context.Posts.FirstOrDefault(p => p.Id == request.PostId && p.IsDeleted == false);
             if (post == null)
@@ -59,7 +56,7 @@ namespace Backend.Services
 
             Comment comment = new Comment
             {
-                UserId = request.UserId,
+                UserId = userId,
                 PostId = request.PostId,
                 Content = request.Content,
                 CreatedAt = DateTime.Now,
@@ -77,6 +74,10 @@ namespace Backend.Services
             {
                 throw new Exception("Bình luận không tồn tại với id: " + id);
             }
+            if (!authService.IsAuthor(comment.UserId))
+            {
+                throw new Exception("bạn không có quyền sửa bình luận này");
+            }
             comment.Content = request.Content;
             comment.UpdatedAt = DateTime.Now;
             context.SaveChanges();
@@ -90,6 +91,10 @@ namespace Backend.Services
             {
                 throw new Exception("Bình luận không tồn tại với id: " + id);
             }
+            if (!authService.IsAuthor(comment.UserId))
+            {
+                throw new Exception("bạn không có quyền xóa bình luận này");
+            }
             comment.IsDeleted = true;
             comment.UpdatedAt = DateTime.Now;
             context.SaveChanges();
@@ -98,11 +103,12 @@ namespace Backend.Services
         public List<CommentResponse> Search(string keyword)
         {
             var lowerKeyword = keyword.ToLower();
-            return context.Comments
+            var item= context.Comments
                 .Where(c => c.IsDeleted == false &&
                     c.Content.ToLower().Contains(lowerKeyword))
-                .Select(c => MapToResponse(c))
                 .ToList();
+             var result=item.Select(c=>MapToResponse(c)).ToList();
+            return result;
         }
 
         public PageResult<CommentResponse> GetPage(int page, int pageSize)

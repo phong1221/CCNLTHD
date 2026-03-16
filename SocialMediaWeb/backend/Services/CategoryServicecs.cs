@@ -10,14 +10,20 @@ namespace Backend.Services
     public class CategoryServicecs : ICategoryService
     {
         public  readonly BlogDbContext context;
+        public readonly IAuthService authService;
 
-        public CategoryServicecs(BlogDbContext context)
+        public CategoryServicecs(BlogDbContext context, IAuthService authService)
         {
             this.context = context;
+            this.authService = authService;
         }
 
         public CategoryResponse createCategory(CategoryRequest categoryRequest)
         {
+            if (!authService.IsAdmin())
+            {
+                throw new Exception("chỉ có admin mới có quyền này");
+            }
             Category category = new Category
             {
                 Name = categoryRequest.Name,
@@ -31,6 +37,10 @@ namespace Backend.Services
 
         public void Delete(int id)
         {
+            if (!authService.IsAdmin())
+            {
+                throw new Exception("chỉ có admin mới có quyền này");
+            }
             var category = context.Categories.FirstOrDefault(c => c.Id == id && c.IsDeleted==false);
             if (category == null)
             {
@@ -81,6 +91,10 @@ namespace Backend.Services
 
         public CategoryResponse Update(int id, CategoryRequest request)
         {
+            if (!authService.IsAdmin())
+            {
+                throw new Exception("chỉ có admin mới có quyền này");
+            }
             var category = context.Categories.FirstOrDefault(c => c.Id == id && c.IsDeleted == false);
             if (category == null)
             {

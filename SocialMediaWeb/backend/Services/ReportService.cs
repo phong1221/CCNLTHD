@@ -11,10 +11,12 @@ namespace Backend.Services
     public class ReportService : IReportService
     {
         private readonly BlogDbContext dbContext;
+        private readonly IAuthService authService;
 
-        public ReportService(BlogDbContext dbContext)
+        public ReportService(BlogDbContext dbContext, IAuthService authService)
         {
             this.dbContext = dbContext;
+            this.authService = authService;
         }
 
         public void AcceptReportAndHidePost(int id)
@@ -24,8 +26,11 @@ namespace Backend.Services
             {
                 throw new Exception("Report khong ton tai hoac da duoc accept rui  ");
             }
+            if (!authService.IsAdmin())
+            {
+                throw new Exception("chỉ có admin mới có quyền này");
+            }
             report.IsAccept = true;
-            dbContext.SaveChanges();
             var post = dbContext.Posts.FirstOrDefault(p => p.Id == report.PostId && p.IsDeleted ==false );
             if (post == null)
             {
@@ -38,11 +43,7 @@ namespace Backend.Services
 
         public ReportResponse createReport(ReportRequest reportRequest)
         {
-            var user = dbContext.Users.FirstOrDefault(u => u.Id == 1);
-            if (user == null)
-            {
-                throw new Exception("User này không tồn tại ");
-            }
+            var userId = authService.GetCurrentUser().Id;
             var post = dbContext.Posts.FirstOrDefault(p => p.Id == reportRequest.PostId);
             if (post == null)
             {
@@ -50,7 +51,7 @@ namespace Backend.Services
             }
             var report = new Report()
             {
-                UserId = user.Id,
+                UserId = userId,
                 PostId = reportRequest.PostId,
                 Reason = reportRequest.Reason,
                 CreatedAt = DateTime.Now,
@@ -136,20 +137,17 @@ namespace Backend.Services
 
         public ReportResponse updateReport(int id, ReportRequest reportRequest)
         {
-            var check= dbContext.Reports.FirstOrDefault(r => r.UserId == 1 && r.Id==id && r.IsDeleted == false && r.IsAccept == false);
-            if (check== null)
+            var check= dbContext.Reports.FirstOrDefault(r =>r.Id==id && r.IsDeleted == false && r.IsAccept == false);
+            if (check == null)
             {
-                throw new Exception("Ban khong co quyen sua report nay hoac report da bi xoa hoac da duoc phe duyet");
+                throw new Exception("report da bi xoa hoac da duoc phe duyet");
             }
-            var post = dbContext.Posts.FirstOrDefault(r => r.Id == reportRequest.PostId);
-            if( post == null)
+            if (!authService.IsAuthor(check.UserId))
             {
-                throw new Exception("Post khong ton tai ");
+                throw new Exception("bạn không có quyền sửa báo cáo  này");
             }
-            check.PostId = reportRequest.PostId;
             check.Reason = reportRequest.Reason;
             dbContext.SaveChanges();
-            check.Post = post;
             return mapToResponse(check);
 
         }
@@ -160,6 +158,10 @@ namespace Backend.Services
             if(report == null)
             {
                 throw new Exception("khong tim thay report hoac da duoc accept");
+            }
+            if (!authService.IsAuthor(report.UserId))
+            {
+                throw new Exception("bạn không có quyền xoá báo cáo  này");
             }
             report.IsDeleted = true;
             dbContext.SaveChanges();

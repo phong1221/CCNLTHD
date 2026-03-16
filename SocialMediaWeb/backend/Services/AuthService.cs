@@ -2,6 +2,7 @@ using Backend.Data;
 using Backend.DTO.AuthDTO;
 using Backend.Models.Entities;
 using Backend.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -13,11 +14,13 @@ namespace Backend.Services
     {
         private readonly BlogDbContext context;
         private readonly IConfiguration configuration;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public AuthService(BlogDbContext context, IConfiguration configuration)
+        public AuthService(BlogDbContext context, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             this.context = context;
             this.configuration = configuration;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public AuthResponse Register(RegisterRequest request)
@@ -125,5 +128,39 @@ namespace Backend.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public  User GetCurrentUser()
+        {
+            var userId = httpContextAccessor.HttpContext?.User
+                ?.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                throw new Exception("Vui lòng đăng nhập");
+            }
+
+            var user = context.Users.FirstOrDefault(u => u.Id == int.Parse(userId));
+
+            if (user == null)
+            {
+                throw new Exception("User không tồn tại");
+            }
+
+            if (!user.IsActive)
+            {
+                throw new Exception("Tài khoản đã bị khóa");
+            }
+
+            return user;
+        }
+        public bool IsAdmin()
+        {
+            return GetCurrentUser().Role == User.UserRole.Admin;
+        }
+        public bool IsAuthor(int authorId)
+        {
+            return GetCurrentUser().Id == authorId;
+        }
+
     }
 }

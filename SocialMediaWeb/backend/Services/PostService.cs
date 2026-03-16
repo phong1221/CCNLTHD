@@ -12,16 +12,17 @@ namespace Backend.Services
     public class PostService : IPostService
     {
         public readonly BlogDbContext context;
+        public readonly IAuthService authService;
 
-        public PostService(BlogDbContext context)
+        public PostService(BlogDbContext context, IAuthService authService)
         {
             this.context = context;
+            this.authService = authService;
         }
 
         public PostResponse createPost(PostRequest postRequest)
         {
-            var UserId = 1;
-            var User=context.Users.FirstOrDefault(u => u.Id == UserId);
+            int UserId = authService.GetCurrentUser().Id;
             var category=context.Categories.FirstOrDefault(c=>c.Id==postRequest.CategoryId);
             if (category == null)
             {
@@ -47,6 +48,10 @@ namespace Backend.Services
             if (post == null)
             {
                 throw new Exception("không tìm thấy bài viết");
+            }
+            if (!authService.IsAuthor(post.UserId))
+            {
+                throw new Exception("bạn không có quyền xóa bài viết này");
             }
             post.IsDeleted = true;
             post.UpdatedAt = DateTime.Now;
@@ -101,11 +106,16 @@ namespace Backend.Services
             {
                 throw new Exception("không tìm thấy bài viết");
             }
+            if (!authService.IsAuthor(post.UserId))
+            {
+                throw new Exception("bạn không có quyền xóa bài viết này");
+            }
             var category = context.Categories.FirstOrDefault(c => c.Id == request.CategoryId);
             if (category == null)
             {
                 throw new Exception("không tìm thể loại");
             }
+           
             post.CategoryId = category.Id;
             post.Title=request.Title;
             post.Content = request.Content;
@@ -128,7 +138,8 @@ namespace Backend.Services
                 CategoryId = post.CategoryId,
                 CategoryName = post.Category?.Name,
                 CategoryDescription = post.Category?.Description,
-                AuthorName = post.User?.FullName
+                AuthorName = post.User?.FullName,
+                ImageUrl= post.ImageUrl,
             };
         }
 

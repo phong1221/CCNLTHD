@@ -2,6 +2,7 @@
 using Backend.DTO.CategoryDTO;
 using Backend.Services;
 using Backend.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor.Infrastructure;
 
@@ -19,6 +20,7 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
+
         public ActionResult GetAllCategory()
         {
             return Ok(categoryServicecs.GetAll());

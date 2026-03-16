@@ -10,13 +10,20 @@ namespace Backend.Services
     {
         private readonly BlogDbContext context;
 
-        public UserService(BlogDbContext context)
+        private readonly IAuthService authService;
+
+        public UserService(BlogDbContext context, IAuthService authService)
         {
             this.context = context;
+            this.authService = authService;
         }
 
         public List<UserResponse> GetAll()
         {
+            if (!authService.IsAdmin())
+            {
+                throw new Exception("chỉ có admin mới có quyền này");
+            }
             return context.Users
                 .Where(u => u.IsActive)
                 .Select(u => MapToResponse(u))
@@ -25,6 +32,10 @@ namespace Backend.Services
 
         public UserResponse GetById(int id)
         {
+            if (!authService.IsAdmin())
+            {
+                throw new Exception("chỉ có admin mới có quyền này");
+            }
             var user = context.Users.FirstOrDefault(u => u.Id == id && u.IsActive);
             if (user == null)
             {
@@ -35,6 +46,10 @@ namespace Backend.Services
 
         public UserResponse Update(int id, UserUpdateRequest request)
         {
+            if (!authService.IsAdmin())
+            {
+                throw new Exception("chỉ có admin mới có quyền này");
+            }
             var user = context.Users.FirstOrDefault(u => u.Id == id && u.IsActive);
             if (user == null)
             {
@@ -71,6 +86,10 @@ namespace Backend.Services
 
         public void Delete(int id)
         {
+            if (!authService.IsAdmin())
+            {
+                throw new Exception("chỉ có admin mới có quyền này");
+            }
             var user = context.Users.FirstOrDefault(u => u.Id == id && u.IsActive);
             if (user == null)
             {
@@ -117,7 +136,10 @@ namespace Backend.Services
             {
                 throw new Exception("Người dùng không tồn tại với id: " + id);
             }
-
+            if (!authService.IsAuthor(user.Id))
+            {
+                throw new Exception("bạn không có quyền sửa  mật khẩu");
+            }
             if (!BCrypt.Net.BCrypt.Verify(request.CurrentPassword, user.PasswordHash))
             {
                 throw new Exception("Mật khẩu hiện tại không đúng");
