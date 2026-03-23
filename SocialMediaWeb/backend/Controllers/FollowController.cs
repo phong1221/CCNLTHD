@@ -14,6 +14,13 @@ namespace Backend.Controllers
             this.followService = followService;
         }
 
+        [HttpPost("{followerId}/follow/{followingId}")]
+        public ActionResult FollowUser(int followerId, int followingId)
+        {
+            followService.FollowUser(followerId, followingId);
+            return Ok(new { message = "Follow thành công" });
+        }
+
         [HttpGet("{userId}/followers")]
         public ActionResult GetFollowers(int userId)
         {

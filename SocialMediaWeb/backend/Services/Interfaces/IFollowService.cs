@@ -8,6 +8,8 @@ namespace Backend.Services.Interfaces
 
         List<FollowResponse> GetFollowings(int userId);
 
+        void FollowUser(int followerId, int followingId);
+
         void Unfollow(int followerId, int followingId);
     }
 }

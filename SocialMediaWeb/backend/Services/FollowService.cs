@@ -42,6 +42,44 @@ namespace Backend.Services
                 .ToList();
         }
 
+        public void FollowUser(int followerId, int followingId)
+        {
+            if (followerId == followingId)
+            {
+                throw new Exception("Không thể tự follow chính mình");
+            }
+
+            var follower = context.Users.FirstOrDefault(u => u.Id == followerId && u.IsActive);
+            if (follower == null)
+            {
+                throw new Exception("Người dùng không tồn tại với id: " + followerId);
+            }
+
+            var following = context.Users.FirstOrDefault(u => u.Id == followingId && u.IsActive);
+            if (following == null)
+            {
+                throw new Exception("Người dùng muốn follow không tồn tại với id: " + followingId);
+            }
+
+            var existingFollow = context.Follows
+                .FirstOrDefault(f => f.FollowerId == followerId && f.FollowingId == followingId);
+
+            if (existingFollow != null)
+            {
+                throw new Exception($"Người dùng {followerId} đã follow người dùng {followingId} rồi");
+            }
+
+            var follow = new Follow
+            {
+                FollowerId = followerId,
+                FollowingId = followingId,
+                CreatedAt = DateTime.Now
+            };
+
+            context.Follows.Add(follow);
+            context.SaveChanges();
+        }
+
         public void Unfollow(int followerId, int followingId)
         {
             var follower = context.Users.FirstOrDefault(u => u.Id == followerId && u.IsActive);
