@@ -33,6 +33,7 @@ namespace Backend.Services
                 {
                     PostId = reactionRequest.PostId,
                     UserId = UserId,
+                    ReactType = reactionRequest.ReactType,
                     CreatedAt = DateTime.Now,
                 };
                 context.Reactions.Add(reactnew);

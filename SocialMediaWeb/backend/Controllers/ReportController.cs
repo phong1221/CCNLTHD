@@ -1,4 +1,5 @@
-﻿using Backend.DTO.ReportDTO;
+﻿using Backend.DTO;
+using Backend.DTO.ReportDTO;
 using Backend.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -64,9 +65,9 @@ namespace Backend.Controllers
             return Ok("report da duoc chap thuan");
         }
         [HttpGet("page")]
-        public IActionResult getPage(int page, int pageSize)
+        public IActionResult getPage([FromQuery] PageRequest pageRequest)
         {
-            var result = reportService.GetPage(page, pageSize);
+            var result = reportService.GetPage(pageRequest.page, pageRequest.pageSize);
             return Ok(result);
         }
     }
