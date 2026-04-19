@@ -67,7 +67,7 @@ namespace Backend.Services
         public List<ReactionResponse> GetAllByPost(int PostId)
         {
             var item= context.Reactions
-                .Where(p => p.Id == PostId)
+                .Where(p => p.PostId == PostId)
                 .Include(r => r.Post)
                 .Include(r => r.User)
                 .ToList();
@@ -78,10 +78,10 @@ namespace Backend.Services
         public PageResult<ReactionResponse> GetPageByPost(int PostId, int page, int pageSize)
         {
             var total = context.Reactions
-                .Where(p=>p.Id==PostId)
+                .Where(p=>p.PostId==PostId)
                 .Count();
              var item= context.Reactions
-                .Where(p => p.Id == PostId)
+                .Where(p => p.PostId == PostId)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .Include(r => r.Post)

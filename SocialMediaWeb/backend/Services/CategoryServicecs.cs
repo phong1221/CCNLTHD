@@ -85,7 +85,7 @@ namespace Backend.Services
             return new PageResult<CategoryResponse>
             {
                 Items = result,
-                Total=item.Count,
+                Total=context.Categories.Count(c => c.IsDeleted == false),
             };
         }
 
