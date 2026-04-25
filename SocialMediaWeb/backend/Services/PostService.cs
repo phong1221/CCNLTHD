@@ -6,6 +6,8 @@ using Backend.Models.Entities;
 using Backend.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
+using StackExchange.Redis;
 
 namespace Backend.Services
 {
@@ -13,11 +15,12 @@ namespace Backend.Services
     {
         public readonly BlogDbContext context;
         public readonly IAuthService authService;
-
-        public PostService(BlogDbContext context, IAuthService authService)
+        public readonly RedisService redisService;
+public PostService(BlogDbContext context, IAuthService authService, RedisService redisService)
         {
             this.context = context;
             this.authService = authService;
+            this.redisService = redisService;
         }
 
         public PostResponse createPost(PostRequest postRequest)
@@ -68,7 +71,7 @@ namespace Backend.Services
             var result = item.Select(p => mapToResponse(p)).ToList();
             return result;
         }
-
+        
         public PageResult<PostResponse> GetPage(int page, int pageSize)
         {
             var total = context.Posts
@@ -88,7 +91,6 @@ namespace Backend.Services
                 Total = total
             };
         }
-
         public PostResponse GetPost(int id)
         {
             var post = context.Posts.FirstOrDefault(p => p.Id == id && p.IsDeleted == false);
@@ -166,5 +168,7 @@ namespace Backend.Services
                 Total = total
             };
         }
+        
+
     }
 }

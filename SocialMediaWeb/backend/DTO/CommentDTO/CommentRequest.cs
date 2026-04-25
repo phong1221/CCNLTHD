@@ -4,8 +4,6 @@ namespace Backend.DTO.CommentDTO
 {
     public class CommentRequest
     {
-        [Required(ErrorMessage = "UserId không được để trống")]
-        public int UserId { get; set; }
 
         [Required(ErrorMessage = "PostId không được để trống")]
         public int PostId { get; set; }

@@ -1,6 +1,9 @@
-﻿using Backend.Models.Entities;
+﻿using Backend.Migrations;
+using Backend.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using System;
+using System.Data;
 
 namespace Backend.Data
 {
@@ -29,6 +32,12 @@ namespace Backend.Data
                 .HasOne(f => f.Following)
                 .WithMany(u => u.Followers)
                 .HasForeignKey(f => f.FollowingId);
+
+            //danh index tittle de truy van nhan hon
+            //Add - Migration InitialCreate Update-Database
+            //modelBuilder.Entity<Post>()
+            //          .HasIndex(p => p.Title);
+                      
         }
     }
 }

@@ -1,3 +1,5 @@
+using Backend.Models.Entities;
+
 namespace Backend.DTO.UserDTO
 {
     public class UserResponse
@@ -14,5 +16,6 @@ namespace Backend.DTO.UserDTO
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public string Role { get; set; }
+        
     }
 }

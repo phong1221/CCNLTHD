@@ -12,6 +12,8 @@
         public bool IsDeleted { get; set; } = false;
         public int CategoryId { get; set; }
         public string? ImageUrl { get; set; }
+        public ICollection<Reaction> Reactions { get; set; } = new List<Reaction>();
+       public ICollection<Comment> Comments { get; set; } = new List<Comment>();
         public Category Category { get; set; }
     }
 }

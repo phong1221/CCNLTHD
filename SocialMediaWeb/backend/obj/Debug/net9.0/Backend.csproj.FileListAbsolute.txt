@@ -284,3 +284,7 @@ D:\nam2\CCNLTHD\SocialMediaWeb\backend\bin\Debug\net9.0\Microsoft.IdentityModel.
 D:\nam2\CCNLTHD\SocialMediaWeb\backend\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\nam2\CCNLTHD\SocialMediaWeb\backend\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
 D:\nam2\CCNLTHD\SocialMediaWeb\backend\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+D:\nam2\CCNLTHD\SocialMediaWeb\backend\bin\Debug\net9.0\Pipelines.Sockets.Unofficial.dll
+D:\nam2\CCNLTHD\SocialMediaWeb\backend\bin\Debug\net9.0\StackExchange.Redis.dll
+D:\nam2\CCNLTHD\SocialMediaWeb\backend\bin\Debug\net9.0\Microsoft.AspNetCore.Mvc.Versioning.dll
+D:\nam2\CCNLTHD\SocialMediaWeb\backend\bin\Debug\net9.0\Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer.dll

@@ -4,9 +4,12 @@ using Backend.Middlewares;
 using Backend.Services;
 using Backend.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
 using System;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -27,7 +30,6 @@ builder.Services.AddControllers()
 // Cấu hình JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -47,6 +49,10 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// cấu hình redis
+builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+    ConnectionMultiplexer.Connect("localhost:6379"));
+builder.Services.AddScoped<RedisService, RedisService>();
 builder.Services.AddAuthorization();
 // lay thong tin user trong context
 builder.Services.AddHttpContextAccessor();
@@ -59,7 +65,18 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IFollowService, FollowService>();
+builder.Services.AddScoped<TestPostService,TestPostService>();
 
+// config api versioning
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+
+    // Chọn cách đọc version
+    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+});
 // set up db 
 builder.Services.AddDbContext<BlogDbContext>(options =>
     options.UseMySql(

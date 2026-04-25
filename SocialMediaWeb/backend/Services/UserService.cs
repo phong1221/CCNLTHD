@@ -16,6 +16,7 @@ namespace Backend.Services
         {
             this.context = context;
             this.authService = authService;
+          
         }
 
         public List<UserResponse> GetAll()
@@ -46,7 +47,8 @@ namespace Backend.Services
 
         public UserResponse Update(int id, UserUpdateRequest request)
         {
-            if (!authService.IsAdmin())
+
+            if (!(authService.IsAdmin() && authService.IsAuthor(authService.GetCurrentUser().Id)))
             {
                 throw new Exception("chỉ có admin mới có quyền này");
             }
@@ -86,7 +88,7 @@ namespace Backend.Services
 
         public void Delete(int id)
         {
-            if (!authService.IsAdmin())
+            if (!(authService.IsAdmin() && authService.IsAuthor(authService.GetCurrentUser().Id)))
             {
                 throw new Exception("chỉ có admin mới có quyền này");
             }
@@ -151,7 +153,6 @@ namespace Backend.Services
 
             return MapToResponse(user);
         }
-
         private static UserResponse MapToResponse(User user)
         {
             return new UserResponse
@@ -171,4 +172,6 @@ namespace Backend.Services
             };
         }
     }
+
+
 }

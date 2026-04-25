@@ -46,5 +46,20 @@ namespace Backend.Controllers
         {
             return Ok(postService.search(postSearch));
         }
+        //[HttpGet("search/redis")]
+        //public IActionResult searchRedis([FromQuery] PostSearch postSearch)
+        //{
+        //    return Ok(postService.searchRedis(postSearch));
+        //}
+        //[HttpGet("all/redis")]
+        //public IActionResult getAllWithRedis()
+        //{
+        //    return Ok(postService.GetAllWithRedis());
+        //}
+        //[HttpGet("follwing/{id}")]
+        //public IActionResult getPostOfFolling(int id)
+        //{
+        //    return Ok(postService.GetPostsFromFollowing(id));
+        //}
     }
 }
